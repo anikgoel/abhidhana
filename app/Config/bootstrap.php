@@ -25,6 +25,15 @@
 // Setup a 'default' cache configuration for use in the application.
 Cache::config('default', array('engine' => 'File'));
 
+spl_autoload_register(function ($class) {
+    foreach (App::path('Vendor') as $base) {
+        $path = $base . str_replace('\\', DS, $class) . '.php';
+        if (file_exists($path)) {
+            include $path;
+            return;
+        }
+    }
+});
 /**
  * The settings below can be used to set additional paths to models, views and controllers.
  *
