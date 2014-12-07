@@ -11,7 +11,7 @@ function translateText(text,language){
         success:function(resp){
             var msg = new SpeechSynthesisUtterance();
             msg.text = resp.data;
-            msg.lang = resp.lang;
+            msg.lang = select_dialect.value;
             speechSynthesis.speak(msg);
         }
     });
