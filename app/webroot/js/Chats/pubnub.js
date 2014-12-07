@@ -21,7 +21,7 @@ function whoIsInTheRoom(channel) {
             if (index > -1) {
                 m.uuids.splice(index, 1);
             }
-            $.getJSON('http://development.luminogurus.com/abhidhana/atuls/getUserDetails', {"uuids": m.uuids}, function(data) {
+            $.getJSON('http://development.luminogurus.com/abhidhana/chats/getUserDetails', {"uuids": m.uuids}, function(data) {
                 console.log(data);
             });
         }
