@@ -6,6 +6,7 @@ echo $this->Html->script(array(
     'http://cdn.pubnub.com/pubnub-3.7.1.min.js',
     'Chats/pubnub.js?v=1.0',
     'Chats/index.js?v=1.0',
+    'Chats/plaintext.js?v=1.0',
 ), array('inline' => FALSE))
 ?>
 
@@ -40,7 +41,7 @@ echo $this->Html->script(array(
                 <div class="col-md-6">
                     <div class="input-group">
                         <span class="input-group-btn">
-                            <button id="chat_button" class="btn btn-success btn-lg">
+                            <button id="chat_button" class="btn btn-success btn-lg" data-state="0">
                                 <i class="fa fa-microphone"></i>
                             </button>
                         </span>
@@ -92,7 +93,7 @@ echo $this->Html->script(array(
 		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 		<h4 class="modal-title">Incoming Call</h4>
 	    </div>
-	    <div class="modal-body">
+	    <div class="modal-body name">
 		Who is calling
 	    </div>
 	    <div class="modal-footer">
@@ -111,7 +112,7 @@ echo $this->Html->script(array(
 		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 		<h4 class="modal-title">Outgoing Call</h4>
 	    </div>
-	    <div class="modal-body">
+	    <div class="modal-body name">
 		I am calling
 	    </div>
 	    <div class="modal-footer">
@@ -128,15 +129,12 @@ echo $this->Html->script(array(
         </span>
         <div class="chat-body clearfix">
             <div class="header">
-                <small class=" text-muted">
+<!--                <small class=" text-muted">
                     <i class="fa fa-clock-o"></i> 14 mins ago
-                </small>
-                <strong class="pull-right primary-font">Bhaumik Patel</strong>
+                </small>-->
+                <strong class="pull-right primary-font"><%= name %></strong>
             </div>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-                dolor, quis ullamcorper ligula sodales.
-            </p>
+            <p><%= text %></p>
         </div>
     </li>
 </script>
@@ -148,15 +146,12 @@ echo $this->Html->script(array(
         </span>
         <div class="chat-body clearfix">
             <div class="header">
-                <strong class="primary-font">Jack Sparrow</strong> 
-                <small class="pull-right text-muted">
+                <strong class="primary-font"><%= name %></strong> 
+<!--                <small class="pull-right text-muted">
                     <i class="fa fa-clock-o"></i> 14 mins ago
-                </small>
+                </small>-->
             </div>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-                dolor, quis ullamcorper ligula sodales.
-            </p>
+            <p><%= text %></p>
         </div>
     </li>
 </script>
