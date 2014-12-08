@@ -1,7 +1,7 @@
 for (var i = 0; i < langs.length; i++) {
     select_language.options[i] = new Option(langs[i][0], i);
 }
-select_language.selectedIndex = 6;
+select_language.selectedIndex = 1;
 updateCountry();
 select_dialect.selectedIndex = 6;
 //showInfo('info_start');
@@ -26,6 +26,7 @@ var last_hit;
 var temp_transcript;
 var transcript_sent = false;
 var sent_text = '';
+var print_text = false;
 $(document).ready(function(){
     if (!('webkitSpeechRecognition' in window)) {
         upgrade();
@@ -105,6 +106,14 @@ $(document).ready(function(){
             }
             console.log(interim_transcript);
             final_transcript = capitalize(final_transcript);
+            if(print_text){
+                if(interim_transcript){
+                    message.value = interim_transcript;
+                }else if(final_transcript){
+                    message.value = final_transcript;
+                }
+            }
+            
             if(final_transcript && !transcript_sent){
                 final_transcript = final_transcript.replace(sent_text, "");
                 sent_text = "";
@@ -150,28 +159,19 @@ function upgrade() {
 //    showInfo('info_upgrade');
 }
 
-function sendToSocket(text,language){
+function sendToSocket(text,language,speak){
+    if(typeof(speak)=='undefined'){
+        speak = true;
+    }
     var channel = $("#chat_box").data("channel");
-    var message = {"type" : "message", "language" : language, "from" : user_id, "message" : text};
+    var message = {
+        "type" : "message", 
+        "language" : language, 
+        "from" : user_id, 
+        "message" : text, 
+        "speak" : speak
+    };
     publish(message, channel);
-}
-
-function translateText(text,language){
-    $.ajax({
-        url:'http://development.luminogurus.com/abhidhana/Translations/translateData',
-        dataType:'json',
-        type:'POST',
-        data:{
-            'text':text,
-            'language':language
-        },
-        success:function(resp){
-            var msg = new SpeechSynthesisUtterance();
-            msg.text = resp.data;
-            msg.lang = resp.lang;
-            speechSynthesis.speak(msg);
-        }
-    });
 }
 
 var two_line = /\n\n/g;
@@ -220,13 +220,19 @@ function emailButton() {
 //    showInfo('');
 }
 
-function startButton() {
+function startButton(tap_to_text) {
     if (recognizing) {
-        recognition.stop();
+        recognition.abort();
         return;
     }
+    if(typeof(tap_to_text) == 'undefined'){
+        tap_to_text = false
+    }
+    print_text = tap_to_text;
+    
     final_transcript = '';
     recognition.lang = select_dialect.value;
+    recognizing = true;
     recognition.start();
     ignore_onend = false;
     //    final_span.innerHTML = '';
