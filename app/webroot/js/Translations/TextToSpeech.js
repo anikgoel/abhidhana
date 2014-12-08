@@ -1,6 +1,7 @@
-function translateText(text,language){
+function translateText(text,language,speak){
+    var return_value = false;
     $.ajax({
-        url:'http://development.luminogurus.com/abhidhana/Translations/translateData',
+        url:base_url+'/Translations/translateData',
         dataType:'json',
         type:'POST',
         data:{
@@ -8,13 +9,19 @@ function translateText(text,language){
             'language_from':language,
             'language_to':select_dialect.value
         },
+        async : false,
         success:function(resp){
-            var msg = new SpeechSynthesisUtterance();
-            msg.text = resp.data;
-            msg.lang = select_dialect.value;
-            speechSynthesis.speak(msg);
+            if(speak){
+                var msg = new SpeechSynthesisUtterance();
+                msg.text = resp.data;
+                msg.lang = select_dialect.value;
+                speechSynthesis.speak(msg);
+            }else{
+                return_value = resp.data;
+            }
         }
     });
+    return return_value;
 }
 
 function receiveFromSocket(){
