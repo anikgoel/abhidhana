@@ -39,6 +39,8 @@ __Future scope:__
 
 ### How to use:
 
+*Demo URL:* http://anikgoel.koding.io/abhidhana
+
 The user needs to register on the app and login with them or the testing accounts listed below. Once logged in, you can see the list of online users will be shown to your left. You can choose one to *chat* or *call* with. And then you can either type or speak into the app in your native language(selected by the user). The other user sees all this conversation in his own language(selected by the user).
 
 __Test Accounts:__
