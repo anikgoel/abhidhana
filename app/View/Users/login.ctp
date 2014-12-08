@@ -30,5 +30,8 @@
 	    echo $this->Form->end($options);
 	    ?>
 	</div>
+	<div class="panel-footer">
+	    Don't have a account yet? <a href="<?php echo $this->Html->url(array('action'=>'register')); ?>" class="btn btn-link">Register</a>
+	</div>
     </div>
 </div>

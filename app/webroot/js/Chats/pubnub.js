@@ -73,26 +73,53 @@ function subscribe(channel) {
 }
 
 function messageRead(message){
+    $("#online_container a").each(function(e){
+	    $(this).removeClass("active");
+    });
+    
+    $("#online_container a[data-sid='"+ message.from +"']").trigger("click");
+    
     if (message.from != user_id){
-	translateText(message.message, message.language);
+	translated = translateText(message.message, message.language, message.speak);
+	if (translated && !message.speak){
+	    var template = $("#message_template_u").html();
+	    var compiled = _.template(template);
+	    
+	    var name = $("#chat_box").data("name");
+	    var compiled_template = compiled({text:translated, name:name});
+
+	    $("#chat_box .chat").append(compiled_template);
+	    var sid = message.from;
+	    var hstry = store_history(sid, message);
+	}
     }
 }
 
 function callRequest(message){
-    $(".online").find("a[data-sid='"+message.from+"']").trigger("click");
-    $('#chat_box')
+    $("#online_container a").each(function(e){
+	$(this).removeClass("active");
+    });
+    
+    $("#online_container a[data-sid='"+message.from+"']").trigger("click");
+    var chatbox = $("#chat_box");
+    
+    chatbox
 	.data("channel", message.channel_name)
 	.data("from_sid", message.from);
+
     $('#incoming').modal({
 	show: true
     });
+    
+    $('#incoming').find(".name").text(chatbox.data('name'));
 }
 
 function callResponse(message){
     if(message.status == "accepted"){
 	startButton();
     } else {
-	console.log("else");
+	$('#outgoing').modal('hide');
+	$("#call_button").show();
     }
 }
 
@@ -116,7 +143,7 @@ function publish(message, channel) {
             channel: channel,
             message: message,
             callback: function(m) {
-                console.log(m)
+//                console.log(m)
             }
         });
     } else {
