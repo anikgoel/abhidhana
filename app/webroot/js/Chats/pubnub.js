@@ -6,8 +6,8 @@
 
 
 var userChannel;
-var user_id = '<?php echo $user_id; ?>';
-pubnub = PUBNUB.init({
+
+var pubnub = PUBNUB.init({
     publish_key: 'pub-c-a34de8d5-fef2-4948-81a3-aca2edf18e03',
     subscribe_key: 'sub-c-53734cc6-7d59-11e4-812f-02ee2ddab7fe',
     uuid: user_id
@@ -22,7 +22,12 @@ function whoIsInTheRoom(channel) {
                 m.uuids.splice(index, 1);
             }
             $.getJSON('http://development.luminogurus.com/abhidhana/chats/getUserDetails', {"uuids": m.uuids}, function(data) {
-                console.log(data);
+                var template = $("#online_template").html();
+		var compiled = _.template(template);
+		var compiled_template = compiled({users:data.data});
+
+		$('#online_container').html(compiled_template);
+		$("#online_container a:first-child").trigger("click");
             });
         }
     });
@@ -30,14 +35,12 @@ function whoIsInTheRoom(channel) {
 
 function subscribe(channel) {
     userChannel = channel;
-    console.log('here');
     pubnub.subscribe({
         channel: channel,
         message: function(message, env, channel) {
-            
             switch(message.type){
                 case 'message' :
-                    $('#text').append(message.message + '<br>');
+		    messageRead(message);
                     break;
                 
                 case 'call' :
@@ -47,16 +50,58 @@ function subscribe(channel) {
                 case 'callRequest' :
                     callRequest(message);
                     break;
+		    
+                case 'callResponse' :
+                    callResponse(message);
+                    break;
+		    
+		case 'broadcast' :
+		    broadcastPresence(message);
+		    break;
+		    
+		case 'unsubscribe' :
+		    $("#incoming").modal('hide');
+		    unsubscribe(message.channel_name);
+		    startButton();
+		    break;
+		
+		default :
+		    break;
             }
-        },
-        presence: function(data) {
-            console.log(data);
         }
     });
 }
 
-function callRequest(message){
+function messageRead(message){
+    if (message.from != user_id){
+	translateText(message.message, message.language);
     }
+}
+
+function callRequest(message){
+    $(".online").find("a[data-sid='"+message.from+"']").trigger("click");
+    $('#chat_box')
+	.data("channel", message.channel_name)
+	.data("from_sid", message.from);
+    $('#incoming').modal({
+	show: true
+    });
+}
+
+function callResponse(message){
+    if(message.status == "accepted"){
+	startButton();
+    } else {
+	console.log("else");
+    }
+}
+
+function broadcastPresence(message){
+    var from = message.from
+    if (from != user_id){
+	whoIsInTheRoom('room');
+    }
+}
 
 
 function unsubscribe(channel) {
@@ -99,25 +144,3 @@ function where_now(uuid) {
         }
     });
 }
-;
-
-$(document).ready(function() {
-    subscribe(['room', 'room_' + user_id]);
-
-    $('#send').click(function() {
-        var text = $('#input').val();
-        var message = {"type" : "message", "language" : "en-US", "from" : user_id, "message" : text}
-        publish(message, 'room');
-    });
-
-    $('#getUsers').click(function() {
-        whoIsInTheRoom('room');
-    });
-
-    $('#startChat').click(function() {
-        var requestee = '2';
-        var message = {"type": "callRequest", "channel_name": "room_" + user_id + "-" + "room_" + requestee, "from" : user_id}
-        userChannel.push("room_" + user_id + "-" + "room_" + requestee);
-        publish(message, 'room_' + requestee);
-    });
-});

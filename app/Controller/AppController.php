@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Application level Controller
  *
@@ -18,7 +19,6 @@
  * @since         CakePHP(tm) v 0.2.9
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-
 App::uses('Controller', 'Controller');
 
 /**
@@ -31,7 +31,24 @@ App::uses('Controller', 'Controller');
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
+
+    public $components = array(
+	'Session',
+	'Cookie',
+	'Auth' => array(
+	    'authError' => 'Did you really think you are allowed to see that?',
+	    'authenticate' => array(
+		'Form' => array(
+		    'fields' => array('password'=> 'password', 'username'=>'username')
+		)
+	    )
+	),
+	'DebugKit.Toolbar', 
+    );
     
-     public $components = array('DebugKit.Toolbar');
-    
+
+    public function beforeFilter() {
+	parent::beforeFilter();
+    }
+
 }

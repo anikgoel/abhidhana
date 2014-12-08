@@ -17,10 +17,15 @@ class ChatsController extends AppController{
 
     public function beforeFilter() {
         parent::beforeFilter();
+	
+	$this->Auth->allow();
     }
     
     public function index(){
-        
+        $this->loadModel('User');
+	$user_id = $this->Auth->user('id');
+	
+	$this->set("user_id", $user_id);
     }
     
     /**

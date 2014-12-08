@@ -151,7 +151,9 @@ function upgrade() {
 }
 
 function sendToSocket(text,language){
-    
+    var channel = $("#chat_box").data("channel");
+    var message = {"type" : "message", "language" : language, "from" : user_id, "message" : text};
+    publish(message, channel);
 }
 
 function translateText(text,language){
@@ -218,7 +220,7 @@ function emailButton() {
 //    showInfo('');
 }
 
-function startButton(event) {
+function startButton() {
     if (recognizing) {
         recognition.stop();
         return;
@@ -232,7 +234,7 @@ function startButton(event) {
     //    start_img.src = 'https://www.google.com/intl/en/chrome/assets/common/images/content/mic-slash.gif';
     //    showInfo('info_allow');
     showButtons('none');
-    start_timestamp = event.timeStamp;
+//    start_timestamp = event.timeStamp;
 }
 
 function showInfo(s) {

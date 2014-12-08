@@ -13,5 +13,11 @@ App::uses('AppModel', 'Model');
  * @author Atul Tagra <atul.tagra.89@gmail.com>
  */
 class User extends AppModel {
-    
+    public function beforeSave($options = array()) {
+	$this->data['User']['password'] = AuthComponent::password(
+	  $this->data['User']['password']
+	);
+	$this->data['User']['is_active'] = 1;
+	return true;
+    }
 }

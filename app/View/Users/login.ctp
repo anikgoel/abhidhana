@@ -1,7 +1,7 @@
 <div class="col-lg-3 col-md-3 col-xs-12 col-lg-offset-4 col-md-offset-4">
     <div class="panel panel-primary margin_top">
 	<div class="panel-heading">
-	    <i class="fa fa-user"></i> Register
+	    <i class="fa fa-user"></i> Login
 	</div>
 	<div class="panel-body">
 	    <?php
@@ -14,13 +14,14 @@
 		    'class' => 'form-control'
 		)
 	    ));
-	    
-	    echo $this->Form->input("name", array('placeholder' => 'Full Name'));
+	    ?>
+	    <?php
 	    echo $this->Form->input("username", array('placeholder' => 'Username'));
-	    echo $this->Form->input("password", array('type' => 'password', 'placeholder' => 'Password'));
-	    
+	    echo $this->Form->input("password", array('type' => 'password', 'placeholder' => 'Your returning key (password)'));
+	    ?>
+	    <?php
 	    $options = array(
-		'label' => 'Register',
+		'label' => 'Login',
 		'div' => array(
 		    'class' => 'form-group',
 		),
