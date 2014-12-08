@@ -29,5 +29,8 @@
 	    echo $this->Form->end($options);
 	    ?>
 	</div>
+	<div class="panel-footer">
+	    Already have a account? <a href="<?php echo $this->Html->url(array('action'=>'login')); ?>" class="btn btn-link">Login</a>
+	</div>
     </div>
 </div>
