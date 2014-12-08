@@ -3,6 +3,8 @@ abhidhana
 
 [![Koding Hackathon](https://github.com/koding/hackathon.submit/raw/master/images/badge.png?raw=true "Koding Hackathon")](https://koding.com/Hackathon)
 
+![The Process](http://development.luminogurus.com/abhidhana/img/Abhidhana_low.jpg)
+
 The app makes it possible for two users of different languages to communicate with each other. The app is a real time translator with the help of which you can have an uninterrupted conversation with a person whose language you don’t even understand. All you have to do is, speak into the app and the app will take care of the rest. Whatever you speak into the app will be translated into the selected language and be spoken out at the other end of the conversation. All this is done in real time. So there are no hassles of listening the audio minutes after the actual conversation. This app has the support for 8 languages so far but now it This app is one of a kind and will hopefully be the new standard for web chat apps. 
 
 
@@ -35,3 +37,58 @@ __Future scope:__
 * It presently speaks out the translation only in female voice. We aim to bring it more life by giving it different genders and accent.
 
 
+### How to use:
+
+The user needs to register on the app and login with them or the testing accounts listed below. Once logged in, you can see the list of online users will be shown to your left. You can choose one to *chat* or *call* with. And then you can either type or speak into the app in your native language(selected by the user). The other user sees all this conversation in his own language(selected by the user).
+
+__Test Accounts:__
+<table>
+   <tr>
+     <th>Username</th>
+     <th>Password</th>
+   </tr>
+   
+   <tr>
+     <td>mike</td>
+     <td>123456</td>
+   </tr>
+   
+    <tr>
+     <td>tina</td>
+     <td>123456</td>
+   </tr>
+   
+    <tr>
+     <td>neil</td>
+     <td>123456</td>
+   </tr>
+</table>  
+
+
+### Screen Shots:
+
+__Realtime Voice Call Multilingual (Incoming):__
+![Realtime Voice Call Multilingual](http://development.luminogurus.com/abhidhana/img/screenshot5.png)
+
+__Realtime Voice Call Multilingual (Outgoing):__
+![Realtime Voice Call Multilingual](http://development.luminogurus.com/abhidhana/img/screenshot4.png)
+
+__Chat In Italian Language:__
+![Chat In Italian Language](http://development.luminogurus.com/abhidhana/img/screenshot1.png)
+
+__Chat In English Language:__
+![Chat In English Language](http://development.luminogurus.com/abhidhana/img/screenshot2.png)
+
+
+### APIs Used:
+
+1. [PubNub](http://www.pubnub.com/)
+2. [Web Speech API](https://dvcs.w3.org/hg/speech-api/raw-file/tip/speechapi.html)
+
+### Technologies Used:
+
+1. [CakePHP](http://cakephp.org/)
+2. [MySQL](http://www.mysql.com/)
+3. [Twitter Bootstrap](http://getbootstrap.com/)
+4. [jQuery](http://jquery.com/)
+5. [Underscore.js](http://underscorejs.org/)
